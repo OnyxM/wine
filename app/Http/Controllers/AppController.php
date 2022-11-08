@@ -10,7 +10,8 @@ class AppController extends Controller
     public function index()
     {
         $data =[
-            'title' => ""
+            'title' => "",
+            'products' => Product::where('isFeatured', 'true')->orderBy('id', 'desc')->limit(8)->get()
         ];
 
         return view("index", $data);
@@ -28,9 +29,12 @@ class AppController extends Controller
 
     public function shop_details($id, $slug)
     {
-        $data =[
-            'title' => "Shop | ",
-            'product' => Product::findOrFail($id)
+        $product = Product::findOrFail($id);
+
+        $data = [
+            'title' => $product->name . ' | ',
+            'product' => $product,
+            'products_o' => Product::whereNot('id', $product->id)->orderBy('id','desc')->limit(3)->get()
         ];
 
         return view("shop_details", $data);
@@ -43,5 +47,14 @@ class AppController extends Controller
         ];
 
         return view("cart", $data);
+    }
+
+    public function contact()
+    {
+        $data =[
+            'title' => "Contact | ",
+        ];
+
+        return view("contact", $data);
     }
 }

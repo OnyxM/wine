@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('size')->nullable();
             $table->string('weight')->nullable();
             $table->string('dimensions')->nullable();
+            $table->enum('isFeatured', ['false', 'true'])->default('false');
             $table->timestamps();
         });
     }

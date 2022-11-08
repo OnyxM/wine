@@ -282,93 +282,20 @@
                 </div>
             </div>
             <div class="row">
+                @foreach($products_o as $p)
                 <div class="col-lg-4 col-sm-6 col-md-6">
                     <div class="single-product single-products">
                         <div class="product-img">
-                            <img src="assets/img/shop/1.png" alt="Product">
+                            <img src="{{ $p->photo }}" alt="Product">
                         </div>
                         <div class="product-details">
-                            <a href="#">Shop Now</a>
-                            <h3>Burgundy</h3>
-                            <ul>
-                                <li>
-                                    <i class="fa fa-star"></i>
-                                </li>
-                                <li>
-                                    <i class="fa fa-star"></i>
-                                </li>
-                                <li>
-                                    <i class="fa fa-star"></i>
-                                </li>
-                                <li>
-                                    <i class="fa fa-star"></i>
-                                </li>
-                                <li>
-                                    <i class="fa fa-star"></i>
-                                </li>
-                            </ul>
-                            <span>$229.50</span>
+                            <a href="{{ route('shop_details', ['id' => $p->id, 'slug' => $p->slug]) }}">Shop Now</a>
+                            <h3>{{ $p->name }}</h3>
+                            <span>${{ $p->price }}</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-sm-6 col-md-6">
-                    <div class="single-product single-products">
-                        <div class="product-img">
-                            <img src="assets/img/shop/2.png" alt="Product">
-                        </div>
-                        <div class="product-details">
-                            <a href="#">Shop Now</a>
-                            <h3>Red Wine</h3>
-                            <ul>
-                                <li>
-                                    <i class="fa fa-star"></i>
-                                </li>
-                                <li>
-                                    <i class="fa fa-star"></i>
-                                </li>
-                                <li>
-                                    <i class="fa fa-star"></i>
-                                </li>
-                                <li>
-                                    <i class="fa fa-star"></i>
-                                </li>
-                                <li>
-                                    <i class="fa fa-star"></i>
-                                </li>
-                            </ul>
-                            <span>$299.70</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 col-md-6 offset-sm-3 offset-lg-0">
-                    <div class="single-product single-products">
-                        <div class="product-img">
-                            <img src="assets/img/shop/3.png" alt="Product">
-                        </div>
-                        <div class="product-details">
-                            <a href="#">Shop Now</a>
-                            <h3>Goose Berry</h3>
-                            <ul>
-                                <li>
-                                    <i class="fa fa-star"></i>
-                                </li>
-                                <li>
-                                    <i class="fa fa-star"></i>
-                                </li>
-                                <li>
-                                    <i class="fa fa-star"></i>
-                                </li>
-                                <li>
-                                    <i class="fa fa-star"></i>
-                                </li>
-                                <li>
-                                    <i class="fa fa-star"></i>
-                                </li>
-                            </ul>
-                            <span>$299.70</span>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
