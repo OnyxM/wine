@@ -17,6 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('products');
             $table->integer('user_id');
+            $table->string('address');
+            $table->string('phone');
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

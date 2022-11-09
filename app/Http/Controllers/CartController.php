@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -86,7 +88,46 @@ class CartController extends Controller
     {
         $this->validate($request, [
             'email' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
         ]);
-        dd($request->all());
+
+        if(isset($request->new_user)) {
+            $this->validate($request, [
+                'email' => 'required|unique:users',
+                'firstname' => 'required',
+                'lastname' => 'required',
+            ]);
+            $user = User::create([
+                'firstname' => $request->firstname,
+                'lastname' => $request->lastname,
+                'email' => $request->email,
+                'password' => bcrypt($request->phone),
+                'address' => $request->address,
+                'city' => $request->city,
+                'postcode' => $request->postcode,
+                'phone' => $request->phone,
+            ]);
+        }else{
+            $user = User::whereEmail($request->email)->first();
+            if(is_null($user)){
+                return redirect()->back()->withInput()->withErrors(['email' => ['Email not found! Check the Create Account Button or use an existing email']]);
+            }
+        }
+
+        $products = array();
+        foreach(\Cart::getContent() as $product){
+            $products[] = [
+                'product' => $product->id,
+                'quantity' => $product->quantity,
+            ];
+        }
+        $new_order = Order::create([
+            'user_id' => $user->id,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'notes' => $request->notes,
+            'products' => json_encode($products),
+        ]);
     }
 }
