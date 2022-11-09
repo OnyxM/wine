@@ -38,17 +38,6 @@
                             <span class="new-price">${{ $product->price }}</span>
                         </div>
 
-{{--                        <div class="product-review">--}}
-{{--                            <div class="rating">--}}
-{{--                                <i class="fa fa-star"></i>--}}
-{{--                                <i class="fa fa-star"></i>--}}
-{{--                                <i class="fa fa-star"></i>--}}
-{{--                                <i class="fa fa-star"></i>--}}
-{{--                                <i class="fa fa-star-half-alt"></i>--}}
-{{--                            </div>--}}
-{{--                            <a href="#" class="rating-count">3 reviews</a>--}}
-{{--                        </div>--}}
-
                         <p>{!! $product->description !!}</p>
 
                         <div class="product-add-to-cart">
@@ -56,14 +45,14 @@
                                 <span class="minus-btn">
                                     <i class="fa fa-minus"></i>
                                 </span>
-                                <input type="text" min="1" value="1">
+                                <input type="text" min="1" value="1" name="qty_item">
                                 <span class="plus-btn">
                                     <i class="fa fa-plus"></i>
                                 </span>
                             </div>
 
-                            <button type="submit" class="default-btn">
-                                <i class="fa fa-cart-plus"></i>Add to Cart
+                            <button id="addToCartBtn" data-id="{{ $product->id }}" type="submit" class="default-btn">
+                                <i class="fa fa-cart-plus"></i> Add to Cart
                             </button>
                         </div>
 
@@ -300,4 +289,29 @@
         </div>
     </section>
     <!-- End Our Product Area -->
+@endsection
+
+@section('js')
+    <script>
+        function sleep(ms) {
+            return new Promise((resolve) => setTimeout(resolve, ms));
+        }
+
+        $(document).on('click', "#addToCartBtn", function(e){
+            e.preventDefault();
+
+            let id = $(this).data('id'),
+                qty = $("input[name='qty_item']").val();
+
+            $.ajax({
+                url: "{{route('cart.store')}}",
+                type: 'post',
+                data: "id=" + id+"&qty=" + qty,
+                dataType: 'json',
+                success: function (response) {
+                    toastr.success(response.message);
+                }
+            })
+        });
+    </script>
 @endsection

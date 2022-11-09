@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
@@ -39,4 +39,18 @@ class Product extends Model
 
         $this->attributes['photo'] = $photo_name;
     }
+
+//    public static function addToCart($product_id, $qty)
+//    {
+//        $cart = json_decode(session('cart'));
+//
+//        array_push($cart, [
+//            'product_id' => $product_id,
+//            'qty' => $qty,
+//            'product' => Product::find($product_id),
+//        ]);
+//
+//        session('cart', json_encode($cart));
+//        dd(session('cart'));
+//    }
 }
