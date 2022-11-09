@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class AppController extends Controller
 {
@@ -44,6 +45,7 @@ class AppController extends Controller
     {
         $data =[
             'title' => "Cart | ",
+            'items' => \Cart::getContent()
         ];
 
         return view("cart", $data);
@@ -56,5 +58,15 @@ class AppController extends Controller
         ];
 
         return view("contact", $data);
+    }
+
+    public function checkout()
+    {
+        $data =[
+            'title' => "Checkout | ",
+            'items' => \Cart::getContent()
+        ];
+
+        return view("checkout", $data);
     }
 }
