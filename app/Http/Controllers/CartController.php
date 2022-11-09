@@ -81,4 +81,12 @@ class CartController extends Controller
 
         return redirect()->route('shop');
     }
+
+    public function placeOrder(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required',
+        ]);
+        dd($request->all());
+    }
 }

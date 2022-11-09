@@ -18,9 +18,14 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'firstname',
+        'lastname',
         'email',
         'password',
+        'address',
+        'city',
+        'postcode',
+        'phone',
     ];
 
     /**
@@ -32,4 +37,9 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function getNameAttribute()
+    {
+        return ucwords($this->lastname . " " . $this->firstname);
+    }
 }

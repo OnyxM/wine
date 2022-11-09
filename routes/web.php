@@ -29,3 +29,8 @@ Route::group(['prefix' => 'api'], function(){
     Route::post('remove', [CartController::class, 'removeCart'])->name('cart.remove');
 });
 Route::get('cart/clear', [CartController::class, 'clearAllCart'])->name('cart.clear');
+Route::post('cart/order', [CartController::class, 'placeOrder'])->name('cart.order');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
