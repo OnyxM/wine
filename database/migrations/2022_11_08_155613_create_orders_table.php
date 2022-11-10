@@ -20,6 +20,9 @@ return new class extends Migration
             $table->string('address');
             $table->string('phone');
             $table->text('notes')->nullable();
+            $table->text('infos')->nullable();
+            $table->string("tracking_code")->unique();
+            $table->enum('status', ['PENDING', 'FAILED', 'SUCCESS']);
             $table->timestamps();
         });
     }

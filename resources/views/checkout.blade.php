@@ -138,7 +138,7 @@
 
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
-                                        <textarea name="notes" id="notes" cols="30" rows="5" placeholder="Order Notes" class="form-control"></textarea>
+                                        <textarea name="notes" id="notes" cols="30" rows="5" placeholder="Order Notes" class="form-control">{{ old('notes') }}</textarea>
                                     </div>
                                 </div>
                             </div>

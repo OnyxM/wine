@@ -254,6 +254,12 @@
         "hideMethod": "fadeOut"
     }
 </script>
+
+@if(Session::has('success'))
+<script>
+    toastr.success("{{ Session::get('success') }}");
+</script>
+@endif
 @yield('js')
 </body>
 </html>

@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
+use App\Traits\SendMailTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class CartController extends Controller
 {
+    use SendMailTrait;
+
     public function addToCart(Request $request)
     {
         $validatedData = Validator::make($request->all(), [
@@ -122,12 +126,29 @@ class CartController extends Controller
                 'quantity' => $product->quantity,
             ];
         }
-        $new_order = Order::create([
+
+        $t_code = Order::random();
+
+        Order::create([
             'user_id' => $user->id,
             'address' => $request->address,
             'phone' => $request->phone,
             'notes' => $request->notes,
             'products' => json_encode($products),
+            'tracking_code' => $t_code
         ]);
+
+        $this->sendMail("mails.init-order", [
+            'email' => $request->email,
+            'subject' => "Order successfully created - <<< $t_code >>>",
+            'code' => $t_code,
+        ]);
+        die;
+
+        session()->flash('success', "Order placed successfully. Your tracking code is: $t_code. Contact the admin with it.");
+
+        \Cart::clear();
+
+        return redirect()->route('shop');
     }
 }
