@@ -143,7 +143,6 @@ class CartController extends Controller
             'subject' => "Order successfully created - <<< $t_code >>>",
             'code' => $t_code,
         ]);
-        die;
 
         session()->flash('success', "Order placed successfully. Your tracking code is: $t_code. Contact the admin with it.");
 

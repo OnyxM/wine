@@ -79,11 +79,23 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12 col-md-6">
+                                <div class="col-lg-6 col-md-6">
                                     <div class="form-group">
                                         <label>Town / City <span class="required">*</span></label>
                                         <input type="text" class="form-control @error('city') is-invalid @enderror" name="city" value="{{ auth()->user()->city ?? old('city') }}" required>
                                         @error('city')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <label>Phone <span class="required">*</span></label>
+                                        <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ auth()->user()->phone ?? old('phone') }}" required>
+                                        @error('phone')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -103,18 +115,6 @@
                                         <label>Email Address <span class="required">*</span></label>
                                         <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ auth()->user()->email ?? old('email') }}" required>
                                         @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="form-group">
-                                        <label>Phone <span class="required">*</span></label>
-                                        <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ auth()->user()->phone ?? old('phone') }}" required>
-                                        @error('phone')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
