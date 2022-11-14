@@ -43,6 +43,9 @@ class AppController extends Controller
 
     public function cart()
     {
+        if(count(\Cart::getContent()) == 0){
+            return redirect()->route('shop');
+        }
         $data =[
             'title' => "Cart | ",
             'items' => \Cart::getContent()
@@ -62,6 +65,9 @@ class AppController extends Controller
 
     public function checkout()
     {
+        if(count(\Cart::getContent()) == 0){
+            return redirect()->route('shop');
+        }
         $data =[
             'title' => "Checkout | ",
             'items' => \Cart::getContent()

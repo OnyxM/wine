@@ -79,6 +79,20 @@
                         <li class="nav-item">
                             <a href="{{ route('contact') }}" class="nav-link">Contact</a>
                         </li>
+                        @auth()
+                            <li class="nav-item">
+                                Bienvenue, {{ Auth::user()->name }}
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </li>
+                        @endauth
                     </ul>
                 </div>
             </div>
@@ -240,6 +254,12 @@
         "hideMethod": "fadeOut"
     }
 </script>
+
+@if(Session::has('success'))
+<script>
+    toastr.success("{{ Session::get('success') }}");
+</script>
+@endif
 @yield('js')
 </body>
 </html>

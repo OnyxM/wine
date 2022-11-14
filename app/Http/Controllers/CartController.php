@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
+use App\Traits\SendMailTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class CartController extends Controller
 {
+    use SendMailTrait;
+
     public function addToCart(Request $request)
     {
         $validatedData = Validator::make($request->all(), [
@@ -77,6 +83,69 @@ class CartController extends Controller
 
     public function clearAllCart()
     {
+        \Cart::clear();
+
+        return redirect()->route('shop');
+    }
+
+    public function placeOrder(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+        ]);
+
+        if(isset($request->new_user)) {
+            $this->validate($request, [
+                'email' => 'required|unique:users',
+                'firstname' => 'required',
+                'lastname' => 'required',
+            ]);
+            $user = User::create([
+                'firstname' => $request->firstname,
+                'lastname' => $request->lastname,
+                'email' => $request->email,
+                'password' => bcrypt($request->phone),
+                'address' => $request->address,
+                'city' => $request->city,
+                'postcode' => $request->postcode,
+                'phone' => $request->phone,
+            ]);
+        }else{
+            $user = User::whereEmail($request->email)->first();
+            if(is_null($user)){
+                return redirect()->back()->withInput()->withErrors(['email' => ['Email not found! Check the Create Account Button or use an existing email']]);
+            }
+        }
+
+        $products = array();
+        foreach(\Cart::getContent() as $product){
+            $products[] = [
+                'product' => $product->id,
+                'quantity' => $product->quantity,
+            ];
+        }
+
+        $t_code = Order::random();
+
+        Order::create([
+            'user_id' => $user->id,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'notes' => $request->notes,
+            'products' => json_encode($products),
+            'tracking_code' => $t_code
+        ]);
+
+        $this->sendMail("mails.init-order", [
+            'email' => $request->email,
+            'subject' => "Order successfully created - <<< $t_code >>>",
+            'code' => $t_code,
+        ]);
+
+        session()->flash('success', "Order placed successfully. Your tracking code is: $t_code. Contact the admin with it.");
+
         \Cart::clear();
 
         return redirect()->route('shop');

@@ -11,6 +11,28 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'products', 'user_id'
+        'user_id',
+        'address',
+        'phone',
+        'notes',
+        'products',
+        'tracking_code',
+        'status',
     ];
+
+    public static function random(){
+        do{
+            $string = "";
+            $chaine = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+//            $chaine = "0123456789abcdefghijklmnopqrstuvwxyz";
+
+            srand((double)microtime()*1000000);
+
+            for($i=0; $i<=5; $i++) {
+                $string .= $chaine[rand()%strlen($chaine)];
+            }
+        }while(Order::where('tracking_code', $string)->first());
+
+        return $string;
+    }
 }

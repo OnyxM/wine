@@ -78,7 +78,7 @@
                                             </td>
 
                                             <td class="product-subtotal">
-                                                <button class="default-btn removeItemFromCart btn-sm" data-id="{{ $item->id }}">Remove</button>
+                                                <button class="btn btn-outline-danger removeItemFromCart btn-sm" data-id="{{ $item->id }}">Remove</button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -96,7 +96,7 @@
 
                                 @if(count($items) > 0)
                                 <div class="col-lg-2 col-sm-2 col-md-2 text-right">
-                                    <a href="{{ route('cart.clear') }}" class="btn btn-outline-danger">Clear Cart</a>
+                                    <a href="{{ route('cart.clear') }}" class="btn btn-sm btn-outline-danger">Clear Cart</a>
                                 </div>
                                 <div class="col-lg-2 col-sm-2 col-md-2 text-right">
                                     <input type="submit" class="default-btn" value="Update Cart">
