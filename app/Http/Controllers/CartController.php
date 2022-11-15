@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Setting;
 use App\Models\User;
 use App\Traits\SendMailTrait;
 use Illuminate\Http\Request;
@@ -129,12 +130,13 @@ class CartController extends Controller
 
         $t_code = Order::random();
 
-        Order::create([
+        $new_order = Order::create([
             'user_id' => $user->id,
             'address' => $request->address,
             'phone' => $request->phone,
             'notes' => $request->notes,
             'products' => json_encode($products),
+            'amount' => \Cart::getTotal() + Setting::getShippingCost(),
             'tracking_code' => $t_code
         ]);
 
@@ -144,10 +146,12 @@ class CartController extends Controller
             'code' => $t_code,
         ]);
 
-        session()->flash('success', "Order placed successfully. Your tracking code is: $t_code. Contact the admin with it.");
-
         \Cart::clear();
 
-        return redirect()->route('shop');
+        return response()->json([
+            'message' => "Order placed successfully. Your tracking code is: $t_code. Contact the admin with it.",
+            'order' => $new_order,
+            'customer' => $user
+        ]);
     }
 }

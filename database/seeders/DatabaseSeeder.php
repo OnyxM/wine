@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Setting;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -24,5 +25,10 @@ class DatabaseSeeder extends Seeder
          ]);
 
         $this->call(ProductsTableSeeder::class);
+
+        Setting::create([
+            'name' => 'shipping_cost',
+            'value' => 1.5
+        ]);
     }
 }
