@@ -11,11 +11,13 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
+        'uuid',
         'user_id',
         'address',
         'phone',
         'notes',
         'products',
+        'amount',
         'tracking_code',
         'status',
     ];
@@ -34,5 +36,10 @@ class Order extends Model
         }while(Order::where('tracking_code', $string)->first());
 
         return $string;
+    }
+
+    public function getRedirectUrlAttribute()
+    {
+        return route('payment.capture_order', ['uuid' => $this->uuid]);
     }
 }

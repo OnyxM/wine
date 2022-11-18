@@ -32,7 +32,7 @@
     <link rel="icon" type="image/png" href="{{ asset('assets/img/favicon.png') }}">
 
     <!-- Title -->
-    <title>{{$title}}Giano - Winery & Wine</title>
+    <title>{{$title}}TCHOUPA CAVE WINE</title>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">

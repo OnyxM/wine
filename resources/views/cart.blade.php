@@ -117,8 +117,8 @@
                                     @endphp
                                     <span>${{$subtotal}}</span>
                                 </li>
-                                <li>Shipping <span>$30.00</span></li>
-                                <li>Total <span><b>${{ $subtotal + 30.0 }}</b></span></li>
+                                <li>Shipping <span>${{ $global_shipping_cost }}</span></li>
+                                <li>Total <span><b>${{ $subtotal + $global_shipping_cost }}</b></span></li>
                             </ul>
                             <a href="{{ route('checkout') }}" class="default-btn">Proceed to Checkout</a>
                         </div>

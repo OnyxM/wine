@@ -34,7 +34,7 @@
                 </div>
             @endguest
 
-            <form method="POST" action="{{ route('cart.order') }}">
+            <form method="POST" action="{{ route('cart.order') }}" id="makePayment">
                 @csrf
                 <div class="row">
                     <div class="col-lg-6 col-md-12">
@@ -191,7 +191,7 @@
                                         </td>
 
                                         <td class="shipping-price">
-                                            <span>$5.00</span>
+                                            <span>${{$global_shipping_cost}}</span>
                                         </td>
                                     </tr>
 
@@ -201,7 +201,7 @@
                                         </td>
 
                                         <td class="product-subtotal">
-                                            <span class="subtotal-amount">${{$subtotal + 5.0}}</span>
+                                            <span class="subtotal-amount">${{$subtotal + $global_shipping_cost}}</span>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -227,6 +227,7 @@
                                 </div>
 
                                 <input type="submit" class="default-btn" value="Place Order">
+{{--                                <button type="button" onclick="makePayment()">Pay Now</button>--}}
                             </div>
                         </div>
                     </div>
@@ -235,4 +236,42 @@
         </div>
     </section>
     <!-- End Checkout Area -->
+@endsection
+
+@section("js")
+    <script src="https://checkout.flutterwave.com/v3.js"></script>
+
+    <script>
+        function makePayment(order, customer) {
+            FlutterwaveCheckout({
+                public_key: "FLWPUBK_TEST-ac274116a4aa2caba69d9939de52aa65-X",
+                tx_ref: order.tracking_code,
+                amount: order.amount,
+                currency: "NGN",
+                payment_options: "card, mobilemoneyghana, ussd",
+                redirect_url: order.redirectUrl,
+                customer: {
+                    email: customer.email,
+                    phone_number: customer.phone,
+                    name: customer.name,
+                }
+            });
+        }
+
+        $(document).on("submit", "#makePayment", function(e){
+            e.preventDefault();
+
+            $.ajax({
+                url: $(this).attr("action"),
+                type: 'post',
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function (response) {
+                    console.log(response);
+
+                    makePayment(response.order, response.customer);
+                }
+            });
+        });
+    </script>
 @endsection
