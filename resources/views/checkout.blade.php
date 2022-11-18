@@ -249,21 +249,12 @@
                 amount: order.amount,
                 currency: "NGN",
                 payment_options: "card, mobilemoneyghana, ussd",
-                redirect_url: "https://webhook.site/8359fb50-70df-4f1c-9feb-d99ab2e8966d",
-                meta: {
-                    consumer_id: customer.id,
-                    consumer_mac: "92a3-912ba-1192a",
-                },
+                redirect_url: order.redirectUrl,
                 customer: {
                     email: customer.email,
                     phone_number: customer.phone,
                     name: customer.name,
-                },
-                customizations: {
-                    title: "Giano Wine Bar",
-                    description: "Payment for an awesome cruise",
-                    logo: "https://wine.globex-test.com/assets/img/giano-logo.png",
-                },
+                }
             });
         }
 
