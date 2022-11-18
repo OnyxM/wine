@@ -254,7 +254,11 @@
                     email: customer.email,
                     phone_number: customer.phone,
                     name: customer.name,
-                }
+                },
+                customizations: {
+                    title: "TCHOUPA CAVE WINE",
+                    logo: "https://wine.globex-test.com/assets/img/giano-logo.png",
+                },
             });
         }
 
