@@ -16,15 +16,16 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->uuid("uuid");
+            $table->integer('user_id');
             $table->string('products');
             $table->string('amount');
-            $table->integer('user_id');
             $table->string('address');
             $table->string('phone');
             $table->text('notes')->nullable();
             $table->text('infos')->nullable();
             $table->string("tracking_code")->unique();
             $table->enum('status', ['PENDING', 'FAILED', 'SUCCESS']);
+            $table->string('payment_mode');
             $table->timestamps();
         });
     }

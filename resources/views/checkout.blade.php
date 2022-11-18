@@ -217,16 +217,13 @@
                                         Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.
                                     </p>
                                     <p>
-                                        <input type="radio" id="paypal" value="PayPal" name="payment_mode">
-                                        <label for="paypal">PayPal</label>
-                                    </p>
-                                    <p>
                                         <input type="radio" id="cash-on-delivery" value="Cash on Delivery" name="payment_mode">
                                         <label for="cash-on-delivery">Cash on Delivery</label>
                                     </p>
                                 </div>
 
                                 <input type="submit" class="default-btn" value="Place Order">
+                                <div id="response"></div>
 {{--                                <button type="button" onclick="makePayment()">Pay Now</button>--}}
                             </div>
                         </div>
@@ -271,9 +268,18 @@
                 data: $(this).serialize(),
                 dataType: 'json',
                 success: function (response) {
-                    console.log(response);
+                    if(response.coninue){
+                        makePayment(response.order, response.customer);
+                    }else{
+                        $(':input','#makePayment')
+                            .not(':button, :submit, :reset, :hidden')
+                            .val('')
+                            .prop('checked', false)
+                            .prop('selected', false);
 
-                    makePayment(response.order, response.customer);
+                        $("#response").addClass("text-success");
+                        $("#response").html(response.message);
+                    }
                 }
             });
         });

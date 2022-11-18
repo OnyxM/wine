@@ -20,6 +20,7 @@ class Order extends Model
         'amount',
         'tracking_code',
         'status',
+        'payment_mode',
     ];
 
     public static function random(){

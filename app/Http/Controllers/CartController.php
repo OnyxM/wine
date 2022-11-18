@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Traits\SendMailTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -121,6 +122,14 @@ class CartController extends Controller
             }
         }
 
+        if(count(\Cart::getContent()) < 1){
+            Log::warning("User tried to create a new order without selecting a product", json_encode($user));
+            return response()->json([
+                'message' => "An error occurred. Please try again later.",
+                'continue' => false
+            ], 500);
+        }
+
         $products = array();
         foreach(\Cart::getContent() as $product){
             $products[] = [
@@ -139,7 +148,8 @@ class CartController extends Controller
             'notes' => $request->notes,
             'products' => json_encode($products),
             'amount' => \Cart::getTotal() + Setting::getShippingCost(),
-            'tracking_code' => $t_code
+            'tracking_code' => $t_code,
+            'payment_mode' => $request->payment_mode,
         ]);
 
         $this->sendMail("mails.init-order", [
@@ -150,10 +160,13 @@ class CartController extends Controller
 
         \Cart::clear();
 
+        Log::info("New order created.", json_encode($new_order));
+
         return response()->json([
             'message' => "Order placed successfully. Your tracking code is: $t_code. Contact the admin with it.",
             'order' => $new_order,
-            'customer' => $user
+            'customer' => $user,
+            'continue' => $request->payment_mode=="Cash on Delivery" ? false : true
         ]);
     }
 
