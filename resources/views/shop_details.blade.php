@@ -70,7 +70,7 @@
                             </div>
 
                             <div class="item">
-                                <a href="#" class="default-btn">Buy it now!</a>
+                                <a href="javascript:void(0);" id="buyNowBtn" data-id="{{ $product->id }}" class="default-btn">Buy it now!</a>
                             </div>
                         </div>
 
@@ -310,6 +310,23 @@
                 dataType: 'json',
                 success: function (response) {
                     toastr.success(response.message);
+                }
+            })
+        });
+
+        $(document).on('click', "#buyNowBtn", function(e){
+            e.preventDefault();
+
+            let id = $(this).data('id'),
+                qty = $("input[name='qty_item']").val();
+
+            $.ajax({
+                url: "{{route('cart.store')}}",
+                type: 'post',
+                data: "id=" + id+"&qty=" + qty,
+                dataType: 'json',
+                success: function (response) {
+                    location.href = "{{route('checkout')}}";
                 }
             })
         });

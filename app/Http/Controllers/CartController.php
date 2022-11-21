@@ -123,7 +123,7 @@ class CartController extends Controller
         }
 
         if(count(\Cart::getContent()) < 1){
-            Log::warning("User tried to create a new order without selecting a product", json_encode($user));
+            Log::warning("User tried to create a new order without selecting a product", ['user'=>$user->email]);
             return response()->json([
                 'message' => "An error occurred. Please try again later.",
                 'continue' => false
@@ -160,7 +160,7 @@ class CartController extends Controller
 
         \Cart::clear();
 
-        Log::info("New order created.", json_encode($new_order));
+        Log::info("New order created.", ['order' => $new_order->id]);
 
         return response()->json([
             'message' => "Order placed successfully. Your tracking code is: $t_code. Contact the admin with it.",
