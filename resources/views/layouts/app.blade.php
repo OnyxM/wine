@@ -159,15 +159,15 @@
                     <ul>
                         <li class="address">
                             <i class="fa fa-map-marker"></i>
-                            25 Street, west Cruch, <br> Newzeland
+                            Biyem-Assi, Accacias, Rue des Ananas
                         </li>
                         <li class="address">
                             <i class="fa fa-phone"></i>
-                            <a href="tel:+125462755">+125462755</a>
+                            <a href="tel:+125462755">+237698295160</a>
                         </li>
                         <li class="address">
                             <i class="fa fa-envelope"></i>
-                            <a href="https://templates.envytheme.com/cdn-cgi/l/email-protection#761e131a1a1936111f1718195815191b"><span class="__cf_email__" data-cfemail="167e737a7a7956717f7778793875797b">[email&#160;protected]</span></a>
+                            tchoupabogningyvan@gmail.com
                         </li>
                     </ul>
                 </div>
@@ -179,8 +179,7 @@
             <div class="col-lg-6 col-md-6">
                 <div>
                     <p>
-                        Copyright <i class="fa fa-copyright"></i>2021 Giano. Designed By
-                        <a href="https://envytheme.com/" target="_blank">EnvyTheme</a>
+                        Copyright <i class="fa fa-copyright"></i>Tchoupa Cave Wine
                     </p>
                 </div>
             </div>
